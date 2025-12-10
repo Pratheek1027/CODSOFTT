@@ -3,8 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 df = pd.read_csv("titanic.csv")
 print(df.head())
@@ -20,10 +19,7 @@ y = df['Survived']
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
-model = RandomForestClassifier(
-    n_estimators=100,
-    random_state=42
-)
+model = LogisticRegression()
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
@@ -42,5 +38,6 @@ print(classification_report(y_test, y_pred))
 new_passenger = [[3, 0, 22, 7.25]]
 prediction = model.predict(new_passenger)
 print("Survived?" , prediction)
+
 
 
