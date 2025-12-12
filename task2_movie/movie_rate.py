@@ -4,6 +4,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+
 
 # ===========================
 # 1. Load Dataset
@@ -80,6 +82,34 @@ model.fit(X_train, y_train)
 # 7. Model Evaluation (MSE & R²)
 # ===========================
 y_pred = model.predict(X_test)
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Compare Actual vs Predicted for first 50 movies
+n = 50
+actual = y_test.values[:n]
+predicted = y_pred[:n]
+
+plt.figure(figsize=(12,6))
+
+plt.plot(actual, label="Actual Rating (Real)", marker='o')
+plt.plot(predicted, label="Predicted Rating (Model)", marker='x')
+
+plt.title("Actual vs Predicted Movie Ratings (Easy Comparison)")
+plt.xlabel("Movie Index (just the first 50 movies)")
+plt.ylabel("Rating")
+
+plt.legend()
+
+# Simple explanation directly on graph
+plt.text(0, max(actual),
+         "Blue line = real ratings\nRed line = predicted ratings\nCloser lines = better accuracy",
+         fontsize=10, bbox=dict(facecolor="white", alpha=0.6))
+
+plt.grid(True)
+plt.show()
+
+
 
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
