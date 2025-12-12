@@ -29,16 +29,17 @@ X_test_scaled = scaler.transform(X_test)
 # Improved Logistic Regression
 model = LogisticRegression(
     solver='liblinear',
-    max_iter=2000,
-    class_weight='balanced'
+    max_iter=3000,
+    class_weight='balanced',
+    C=0.5,               # regularization strength
+    penalty='l2'         # default penalty (good for Titanic)
 )
 
 model.fit(X_train_scaled, y_train)
 
+
 # Predict
 y_pred = model.predict(X_test_scaled)
-
-y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 from sklearn.metrics import confusion_matrix
@@ -46,10 +47,23 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 cm = confusion_matrix(y_test, y_pred)
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+
+# Create a confusion matrix with custom labels inside each block
+group_names = ["Correct: Died", "Wrong: Predicted Survived",
+               "Wrong: Predicted Died", "Correct: Survived"]
+
+group_counts = [f"{value}" for value in cm.flatten()]  # numbers
+labels = [f"{name}\nCount: {count}" for name, count in zip(group_names, group_counts)]
+labels = np.asarray(labels).reshape(2,2)
+
+sns.heatmap(cm, annot=labels, fmt="", cmap="Blues")
 plt.xlabel("Predicted")
 plt.ylabel("Actual")
 plt.show()
+
+
+
+
 from sklearn.metrics import classification_report
 print(classification_report(y_test, y_pred))
 # Predict for new passenger
