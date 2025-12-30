@@ -1,8 +1,9 @@
-#CODSOFT Data Science Internship
+# CODSOFT Data Science Internship
 
 This repository contains the projects I completed as part of the CODSOFT Data Science Internship.
 
  Tasks Completed
+
 🔹 Task 1: Titanic Survival Prediction
 
 Built a machine learning model to predict whether a passenger survived the Titanic disaster using Logistic Regression.
